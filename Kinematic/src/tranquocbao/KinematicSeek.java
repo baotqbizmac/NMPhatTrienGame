@@ -3,22 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bth2;
+package tranquocbao;
 
 import java.util.Objects;
 
-/**
- *
- * @author 103
- */
-public class KinematicFlee {
+
+public class KinematicSeek {
     Character character;
     Character target;
     float maxSpeed;
-    public KinematicFlee(Vector2D velocity, int par) {
+
+    public KinematicSeek() {
     }
-    
-    public Character getCharacter() {
+
+    public KinematicSeek(Character charater, Character target, float maxSpeed) {
+        this.character = charater;
+        this.target = target;
+        this.maxSpeed = maxSpeed;
+    }
+
+    public Character getCharater() {
         return character;
     }
 
@@ -30,8 +34,8 @@ public class KinematicFlee {
         return maxSpeed;
     }
 
-    public void setCharacter(Character character) {
-        this.character = character;
+    public void setCharater(Character charater) {
+        this.character = charater;
     }
 
     public void setTarget(Character target) {
@@ -41,47 +45,47 @@ public class KinematicFlee {
     public void setMaxSpeed(float maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
-    public KinematicFlee(Character charater, Character target, float maxSpeed) {
-        this.character = charater;
-        this.target = target;
-        this.maxSpeed = maxSpeed;
-    }
-    @Override
-    public String toString() {
-        return "KinematicFlee{" + "character=" + character + ", target=" + target + ", maxSpeed=" + maxSpeed + '}';
-    }
 
     @Override
     public int hashCode() {
-        int hash = 5;
+        int hash = 7;
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
         if (obj == null) {
             return false;
         }
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final KinematicFlee other = (KinematicFlee) obj;
+        final KinematicSeek other = (KinematicSeek) obj;
+        if (Float.floatToIntBits(this.maxSpeed) != Float.floatToIntBits(other.maxSpeed)) {
+            return false;
+        }
         if (!Objects.equals(this.character, other.character)) {
             return false;
         }
         if (!Objects.equals(this.target, other.target)) {
             return false;
         }
-        if (Float.floatToIntBits(this.maxSpeed) != Float.floatToIntBits(other.maxSpeed)) {
-            return false;
-        }
         return true;
     }
-    public KinematicFlee ganerateKinematicFlee(){
+
+    @Override
+    public String toString() {
+        return "KinematicSeek{" + "charater=" + character + ", target=" + target + ", maxSpeed=" + maxSpeed + '}';
+    }
+    
+    public KinematicOutput ganerateKinematicOutput(){
         Vector2D velocity = new Vector2D();
-        velocity = character.getPosition().subVector2D(target.getPosition());
+        velocity = target.getPosition().subVector2D(character.getPosition());
         velocity.normalize();
         velocity.mulConstant(maxSpeed);
-        return new KinematicFlee(velocity,0);
+        return new KinematicOutput(velocity,0);
     }
 }
